@@ -336,30 +336,49 @@ var webApp = function() {
 			console.log('Good to see you, ' + response.name + '.');
 		});
 	};
+	
+	var gplusLogin = function(authResult) {
+		console.log('gplusLogin');
+	};
 
-    return {
-        init: function () {
-            uiInit(); // Initialize UI Code
-            uiDemo(); // Initialize Demo Code
-            primaryNav(); // Primary Navigation functionality
-            scrollToTop(); // Scroll to top functionality
-            themeOptions(); // Demo Theme Options functionality
-            dtIntegration(); // Datatables Bootstrap integration
-        },
-        
-        startWithFacebook: function() {
-        	FB.getLoginStatus(function(response) {
-    			console.log(response);
-    			if (response.status === 'connected') {
-    				fbValidate(response);
-    			} else if (response.status === 'not_authorized') {
-    				fbLogin();
-    			} else {
-    				fbLogin();
-    			}
-    		});
-        }
-    };
+	return {
+		init: function () {
+			uiInit(); // Initialize UI Code
+			uiDemo(); // Initialize Demo Code
+			primaryNav(); // Primary Navigation functionality
+			scrollToTop(); // Scroll to top functionality
+			themeOptions(); // Demo Theme Options functionality
+			dtIntegration(); // Datatables Bootstrap integration
+		},
+
+		startWithFacebook: function() {
+			FB.getLoginStatus(function(response) {
+				console.log(response);
+				if (response.status === 'connected') {
+					fbValidate(response);
+				} else if (response.status === 'not_authorized') {
+					fbLogin();
+				} else {
+					fbLogin();
+				}
+			});
+		},
+		
+		startWithGPlus: function(authResult) {
+			gplusLogin(authResult);
+		},
+		
+		startWithGPlusRender: function() {
+			console.log('Google Plus Render');
+			gapi.signin.render('login-btn-google', {
+				'callback': 'gplusLogin',
+				'clientid': '688716066325-joovnn3m3ucg2uilhljd1fdpi1a190hv.apps.googleusercontent.com',
+				'cookiepolicy': 'single_host_origin',
+				'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+				'scope': 'https://www.googleapis.com/auth/plus.login'
+			});
+		}
+	};
 }();
 
 
@@ -374,6 +393,15 @@ window.fbAsyncInit = function() {
 	
 	$('#login-btn-facebook').on('click', webApp.startWithFacebook);
 };
+
+window.gplusAsyncInit = function() {
+	console.log('gplusAsyncInit loaded');
+	webApp.startWithGPlusRender();
+};
+
+function gplusLogin(authResult) {
+	webApp.startWithGPlus(authResult);
+}
 
 /* Initialize WebApp when page loads */
 $(function(){ webApp.init(); });

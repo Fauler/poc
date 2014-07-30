@@ -39,16 +39,6 @@
 				<button id="login-btn-facebook" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</button>
 				<button id="login-btn-google" class="btn btn-danger"><i class="fa fa-google-plus"></i> Google</button>
 				<button id="login-btn-email" class="btn btn-default">or Email <i class="fa fa-envelope"></i></button>
-				<span id="signinButton">
-  <span
-    class="g-signin"
-    data-callback="signinCallback"
-    data-clientid="688716066325-joovnn3m3ucg2uilhljd1fdpi1a190hv.apps.googleusercontent.com"
-    data-cookiepolicy="single_host_origin"
-    data-requestvisibleactions="http://schema.org/AddAction"
-    data-scope="https://www.googleapis.com/auth/plus.login">
-  </span>
-</span>
 			</div>
 			
 			<form id="login-form" action="index.html" method="post" class="form-horizontal">
@@ -114,7 +104,7 @@
 				ref.parentNode.insertBefore(js, ref); 
 
 				var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-				po.src = 'https://apis.google.com/js/client:plusone.js';
+				po.src = 'https://apis.google.com/js/client:plusone.js?onload=gplusAsyncInit';
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 				
 				console.log('LOADED.');
